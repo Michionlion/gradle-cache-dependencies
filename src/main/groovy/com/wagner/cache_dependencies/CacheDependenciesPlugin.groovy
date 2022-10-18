@@ -70,6 +70,7 @@ abstract class CacheToMavenDirectory extends DefaultTask {
         project.configurations.findAll(validConfiguration).each(addAll)
 
         for (ResolvedArtifact artifact : artifacts) {
+            logger.progress("Generating artifact list > Working on ${artifact.name}")
             ModuleVersionIdentifier id = artifact.moduleVersion.id
             copyList.put(artifact.file, destination.dir(getPath(id.group, id.name, id.version)).get().getAsFile())
         }
@@ -86,6 +87,7 @@ abstract class CacheToMavenDirectory extends DefaultTask {
                 .withArtifacts(MavenModule, MavenPomArtifact)
                 .execute().resolvedComponents.each { component ->
                     ComponentIdentifier id = component.id
+                    logger.progress("Generating POM list > Working on ${id.displayName}")
                     if (id instanceof ModuleComponentIdentifier) {
                         File moduleDir = destination.dir(getPath(id.group, id.module, id.version)).get().getAsFile()
                         component.getArtifacts(MavenPomArtifact).each { pom ->
@@ -97,11 +99,13 @@ abstract class CacheToMavenDirectory extends DefaultTask {
         logger.progress('Copying files')
 
         copyList.eachWithIndex { src, dest, index ->
-            fileSystem.copy {
+            fileSystem.sync {
                 from src
                 into dest
             }
-            logger.progress("Copying files > Finshed ${index+1}/${copyList.size()}: ${(int) Math.round((index+1)/copyList.size()*100)}% complete > Working on ${src.name}")
+            def items = "${index+1}/${copyList.size()}"
+            def percent = (int) Math.round((index + 1) / copyList.size() * 100)
+            logger.progress("Copying files > Finshed ${items}: ${percent}% complete > Working on ${src.name}")
         }
 
         logger.completed()
