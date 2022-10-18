@@ -32,7 +32,7 @@ pluginBundle {
 
 gradlePlugin {
   plugins {
-    cache_dependencies {
+    "cache-dependencies" {
       id = "${group}.${name}"
       displayName = "Cache Dependencies"
       description = "Adds tasks to enable caching your dependencies in various ways"
