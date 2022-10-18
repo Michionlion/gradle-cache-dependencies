@@ -13,17 +13,6 @@ group = "com.wagner"
 
 logger.lifecycle("\n\u001B[1;36mVERSION ${version}\u001B[0m\n")
 
-
-repositories {
-  mavenLocal()
-  mavenCentral()
-}
-
-dependencies {
-  implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.3'
-  runtimeOnly group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.4'
-}
-
 pluginBundle {
   website = "https://github.com/michionlion/gradle-cache-dependencies"
   vcsUrl = "https://github.com/michionlion/gradle-cache-dependencies"
@@ -33,7 +22,7 @@ pluginBundle {
 gradlePlugin {
   plugins {
     cacheDependencies {
-      id = "${group}.${project.name}"
+      id = "com.wagner.cache-dependencies"
       displayName = "Cache Dependencies"
       description = "Adds tasks to enable caching your dependencies in various ways"
       implementationClass = "com.wagner.cache_dependencies.CacheDependenciesPlugin"
