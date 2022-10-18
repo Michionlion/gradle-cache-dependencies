@@ -1,0 +1,42 @@
+plugins {
+  id "groovy"
+  id "com.gradle.plugin-publish" version "1.0.0"
+  id "com.wagner.gitver" version "0.1.0"
+}
+
+// load current source as plugin
+def engine = new GroovyScriptEngine(file('src/main/groovy').absolutePath, getClass().getClassLoader())
+def cachePlugin = engine.loadScriptByName("com/wagner/cache_dependencies/CacheDependenciesPlugin.groovy")
+apply plugin: cachePlugin
+
+group = "com.wagner"
+
+logger.lifecycle("\n\u001B[1;36mVERSION ${version}\u001B[0m\n")
+
+
+repositories {
+  mavenLocal()
+  mavenCentral()
+}
+
+dependencies {
+  implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.3'
+  runtimeOnly group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.4'
+}
+
+pluginBundle {
+  website = "https://github.com/michionlion/gradle-cache-dependencies"
+  vcsUrl = "https://github.com/michionlion/gradle-cache-dependencies"
+  tags = ["offline", "cache", "dependencies"]
+}
+
+gradlePlugin {
+  plugins {
+    cache_dependencies {
+      id = "${group}.${name}"
+      displayName = "Cache Dependencies"
+      description = "Adds tasks to enable caching your dependencies in various ways"
+      implementationClass = "com.wagner.cache_dependencies.CacheDependenciesPlugin"
+    }
+  }
+}
