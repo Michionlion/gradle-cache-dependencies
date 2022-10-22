@@ -15,6 +15,9 @@ class CacheDependenciesPlugin implements Plugin<Project> {
             group = 'Cache'
             description = 'Cache all dependencies to a maven repository'
         }
+        project.task('archiveDependencies', type: ArchiveDependencies) {
+            group = 'Cache'
+            description = 'Archive all dependencies to a tar.gz file'
+        }
     }
-
 }
