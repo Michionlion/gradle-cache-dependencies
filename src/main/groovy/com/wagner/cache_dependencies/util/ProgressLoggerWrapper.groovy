@@ -16,7 +16,7 @@
 //
 // MODIFIED FROM ORIGINAL BY Saejin Mahlau-Heinert
 
-package com.wagner.cache_dependencies
+package com.wagner.cache_dependencies.util
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

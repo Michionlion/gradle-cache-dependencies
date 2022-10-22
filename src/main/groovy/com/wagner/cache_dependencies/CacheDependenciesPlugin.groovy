@@ -5,10 +5,13 @@ import javax.inject.Inject
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
+import com.wagner.cache_dependencies.task.CacheDependenciesToMaven
+import com.wagner.cache_dependencies.task.ArchiveDependencies
+
 class CacheDependenciesPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
-        project.task('cacheToMaven', type: CacheToMavenDirectory) {
+        project.task('cacheDependenciesToMaven', type: CacheDependenciesToMaven) {
             group = 'Cache'
             description = 'Cache all dependencies to a maven repository'
         }
